@@ -1,6 +1,6 @@
 # simptrad
 
-[![CI](https://github.com/yjl9903/simptrad/actions/workflows/ci.yml/badge.svg)](https://github.com/yjl9903/simptrad/actions/workflows/ci.yml)
+[![version](https://img.shields.io/npm/v/simptrad?label=simptrad)](https://www.npmjs.com/package/simptrad) [![CI](https://github.com/yjl9903/simptrad/actions/workflows/ci.yml/badge.svg)](https://github.com/yjl9903/simptrad/actions/workflows/ci.yml)
 
 简体字和繁体字转换。
 

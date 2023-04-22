@@ -1,8 +1,12 @@
 {
   "name": "simptrad",
   "version": "0.0.0",
-  "description": "",
-  "keywords": [],
+  "description": "简体字和繁体字转换",
+  "keywords": [
+    "chinese",
+    "simplified-chinese",
+    "traditional-chinese"
+  ],
   "homepage": "https://github.com/yjl9903/simptrad#readme",
   "bugs": {
     "url": "https://github.com/yjl9903/simptrad/issues"

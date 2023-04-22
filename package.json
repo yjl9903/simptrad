@@ -1,0 +1,49 @@
+{
+  "name": "simptrad",
+  "version": "0.0.0",
+  "description": "",
+  "keywords": [],
+  "homepage": "https://github.com/yjl9903/simptrad#readme",
+  "bugs": {
+    "url": "https://github.com/yjl9903/simptrad/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yjl9903/simptrad.git"
+  },
+  "license": "MIT",
+  "author": "XLor",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.mjs",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "unbuild",
+    "format": "prettier --write src/**/*.ts",
+    "release": "bumpp --commit --push --tag && pnpm publish",
+    "test": "vitest",
+    "test:ci": "vitest --run",
+    "typecheck": "tsc --noEmit",
+    "preversion": "pnpm typecheck && pnpm build"
+  },
+  "devDependencies": {
+    "@types/node": "^18.15.13",
+    "bumpp": "^9.1.0",
+    "prettier": "^2.8.7",
+    "typescript": "^5.0.4",
+    "unbuild": "^1.2.1",
+    "vite": "^4.3.1",
+    "vitest": "^0.30.1"
+  },
+  "packageManager": "pnpm@8.3.1"
+}

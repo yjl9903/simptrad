@@ -41,7 +41,7 @@
     "preversion": "pnpm typecheck && pnpm build"
   },
   "devDependencies": {
-    "@types/node": "^18.15.13",
+    "@types/node": "^18.16.0",
     "bumpp": "^9.1.0",
     "prettier": "^2.8.7",
     "typescript": "^5.0.4",

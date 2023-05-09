@@ -2,7 +2,7 @@
 
 [![version](https://img.shields.io/npm/v/simptrad?label=simptrad)](https://www.npmjs.com/package/simptrad) [![CI](https://github.com/yjl9903/simptrad/actions/workflows/ci.yml/badge.svg)](https://github.com/yjl9903/simptrad/actions/workflows/ci.yml)
 
-简体字和繁体字转换。
+简体字和繁体字转换，半角字符和全角字符转换。
 
 ## Usage
 
@@ -18,6 +18,16 @@ const t2 = `子曰：「學而時習之，不亦說乎？有朋自遠方來，�
 
 console.log(simpleToTrad(t1))
 console.log(tradToSimple(t2))
+```
+
+```ts
+import { halfToFull, fullToHalf } from 'simptrad'
+
+const t1 = `子曰：「学而时习之，不亦说乎？有朋自远方来，不亦乐乎？人不知，而不愠，不亦君子乎？」`;
+const t2 = `子曰:「学而时习之,不亦说乎?有朋自远方来,不亦乐乎?人不知,而不愠,不亦君子乎?」`;
+
+console.log(fullToHalf(t1))
+console.log(halfToFull(t2))
 ```
 
 ## License

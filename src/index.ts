@@ -11,6 +11,7 @@ for (let i = 0; i < trad.length; i++) {
 }
 
 export function simpleToTrad(text: string) {
+  if (!text) return '';
   let res = '';
   for (let i = 0; i < text.length; i++) {
     if (simpId.has(text[i])) {
@@ -23,10 +24,43 @@ export function simpleToTrad(text: string) {
 }
 
 export function tradToSimple(text: string) {
+  if (!text) return '';
   let res = '';
   for (let i = 0; i < text.length; i++) {
     if (tradId.has(text[i])) {
       res += simple[tradId.get(text[i])!];
+    } else {
+      res += text[i];
+    }
+  }
+  return res;
+}
+
+export function halfToFull(text: string, { space = false }: { space?: boolean } = {}) {
+  if (!text) return '';
+  let res = '';
+  for (let i = 0; i < text.length; i++) {
+    const code = text.charCodeAt(i);
+    if (code === 32) {
+      res += space ? String.fromCharCode(12288) : text[i];
+    } else if (code < 127) {
+      res += String.fromCharCode(code + 65248);
+    } else {
+      res += text[i];
+    }
+  }
+  return res;
+}
+
+export function fullToHalf(text: string, { space = false }: { space?: boolean } = {}) {
+  if (!text) return '';
+  let res = '';
+  for (let i = 0; i < text.length; i++) {
+    const code = text.charCodeAt(i);
+    if (code == 12288) {
+      res += space ? String.fromCharCode(32) : text[i];
+    } else if (65280 < code && code < 65375) {
+      res += String.fromCharCode(code - 65248);
     } else {
       res += text[i];
     }

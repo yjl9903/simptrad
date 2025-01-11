@@ -102,4 +102,18 @@ describe('half and full', () => {
     expect(fullToHalf(lines[28])).toBe(lines[29]);
     expect(halfToFull(lines[29])).toBe(lines[28]);
   });
+
+  it('full punctuations', () => {
+    const full = `，。、！？；：“”‘’「」『』《》（）【】——……、・─`;
+    const half = `,.,!?;:""''「」『』《》()[]——……,·-`;
+    expect(fullToHalf(full, { punctuation: true })).toStrictEqual(half);
+    expect(halfToFull(full, { punctuation: true })).toStrictEqual(full);
+  });
+
+  it('half punctuations', () => {
+    const half = `,.,!?;:""''「」『』《》()[]——……,·-`;
+    const full = `，．，！？；：＂＂＇＇「」『』《》（）［］——……，・－`;
+    expect(halfToFull(half, { punctuation: true })).toStrictEqual(full);
+    expect(fullToHalf(half, { punctuation: true })).toStrictEqual(half);
+  });
 });

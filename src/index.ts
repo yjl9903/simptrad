@@ -36,7 +36,38 @@ export function tradToSimple(text: string) {
   return res;
 }
 
-export function halfToFull(text: string, { space = false }: { space?: boolean } = {}) {
+export interface HalfFullOptions {
+  space?: boolean;
+
+  punctuation?: boolean;
+}
+
+const halfPunctuations = new Map([
+  ['.', '。'],
+  ['~', '～'],
+  ['-', '─'],
+  ['·', '・'],
+  ['[', '【'],
+  [']', '】']
+]);
+const fullPunctuations = new Map([
+  ['。', '.'],
+  ['～', '~'],
+  ['─', '-'],
+  ['・', '·'],
+  ['【', '['],
+  ['】', ']'],
+  ['“', '"'],
+  ['”', '"'],
+  ['‘', `'`],
+  ['’', `'`],
+  ['、', ',']
+]);
+
+export function halfToFull(
+  text: string,
+  { space = false, punctuation = false }: HalfFullOptions = {}
+) {
   if (!text) return '';
   let res = '';
   for (let i = 0; i < text.length; i++) {
@@ -46,13 +77,20 @@ export function halfToFull(text: string, { space = false }: { space?: boolean } 
     } else if (code < 127) {
       res += String.fromCharCode(code + 65248);
     } else {
-      res += text[i];
+      if (punctuation) {
+        res += halfPunctuations.get(text[i]) ?? text[i];
+      } else {
+        res += text[i];
+      }
     }
   }
   return res;
 }
 
-export function fullToHalf(text: string, { space = false }: { space?: boolean } = {}) {
+export function fullToHalf(
+  text: string,
+  { space = false, punctuation = false }: HalfFullOptions = {}
+) {
   if (!text) return '';
   let res = '';
   for (let i = 0; i < text.length; i++) {
@@ -62,7 +100,11 @@ export function fullToHalf(text: string, { space = false }: { space?: boolean } 
     } else if (65280 < code && code < 65375) {
       res += String.fromCharCode(code - 65248);
     } else {
-      res += text[i];
+      if (punctuation) {
+        res += fullPunctuations.get(text[i]) ?? text[i];
+      } else {
+        res += text[i];
+      }
     }
   }
   return res;

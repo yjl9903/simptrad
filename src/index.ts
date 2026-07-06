@@ -1,17 +1,27 @@
-import { simple, trad } from './dict.json';
+import dict from './dict.json' with { type: 'json' };
 
+let indexed = false;
+
+const { simple, trad } = dict;
 const simpId = new Map<string, number>();
 const tradId = new Map<string, number>();
 
-for (let i = 0; i < simple.length; i++) {
-  simpId.set(simple[i], i);
-}
-for (let i = 0; i < trad.length; i++) {
-  tradId.set(trad[i], i);
+function ensureIndex() {
+  if (indexed) return;
+  for (let i = 0; i < simple.length; i++) {
+    simpId.set(simple[i], i);
+  }
+  for (let i = 0; i < trad.length; i++) {
+    tradId.set(trad[i], i);
+  }
+  indexed = true;
 }
 
 export function simpleToTrad(text: string) {
   if (!text) return '';
+
+  ensureIndex();
+
   let res = '';
   for (let i = 0; i < text.length; i++) {
     if (simpId.has(text[i])) {
@@ -20,11 +30,15 @@ export function simpleToTrad(text: string) {
       res += text[i];
     }
   }
+
   return res;
 }
 
 export function tradToSimple(text: string) {
   if (!text) return '';
+
+  ensureIndex();
+
   let res = '';
   for (let i = 0; i < text.length; i++) {
     if (tradId.has(text[i])) {
@@ -33,6 +47,7 @@ export function tradToSimple(text: string) {
       res += text[i];
     }
   }
+
   return res;
 }
 
@@ -50,6 +65,7 @@ const halfPunctuations = new Map([
   ['[', '【'],
   [']', '】']
 ]);
+
 const fullPunctuations = new Map([
   ['。', '.'],
   ['～', '~'],
@@ -107,5 +123,6 @@ export function fullToHalf(
       }
     }
   }
+
   return res;
 }

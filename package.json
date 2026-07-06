@@ -34,7 +34,7 @@
   "scripts": {
     "build": "tsdown",
     "format": "prettier --write src/**/*.ts",
-    "release": "bumpp --commit --push --tag && pnpm publish",
+    "release": "bumpp --commit --push --tag",
     "test": "vitest",
     "test:ci": "vitest --run",
     "typecheck": "tsc --noEmit",

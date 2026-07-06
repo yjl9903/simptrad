@@ -1,6 +1,13 @@
 import { describe, expect, it } from 'vitest';
 
-import { simpleToTrad, tradToSimple, halfToFull, fullToHalf } from '../src';
+import {
+  simpleToTrad,
+  tradToSimple,
+  halfToFull,
+  fullToHalf,
+  clearPunctuation,
+  normalize
+} from '../src';
 
 describe('simp and trad', () => {
   it('should work', () => {
@@ -112,8 +119,58 @@ describe('half and full', () => {
 
   it('half punctuations', () => {
     const half = `,.,!?;:""''「」『』《》()[]——……,·-`;
-    const full = `，．，！？；：＂＂＇＇「」『』《》（）［］——……，・－`;
+    const full = `，。，！？；：＂＂＇＇「」『』《》（）【】——……，・─`;
     expect(halfToFull(half, { punctuation: true })).toStrictEqual(full);
     expect(fullToHalf(half, { punctuation: true })).toStrictEqual(half);
+  });
+
+  it('halfwidth punctuations', () => {
+    expect(halfToFull(`｡､･`, { punctuation: true })).toStrictEqual(`。、・`);
+  });
+
+  it('keeps control characters', () => {
+    expect(halfToFull("a\tb\nc")).toBe("ａ\tｂ\nｃ");
+    expect(fullToHalf("ａ\tｂ\nｃ")).toBe("a\tb\nc");
+  });
+
+  it('clears punctuations', () => {
+    expect(clearPunctuation(`Hello, 世界！「ok」｡､･_`)).toBe(`Hello 世界ok`);
+    expect(clearPunctuation(`Hello,世界！`, ' ')).toBe(`Hello 世界 `);
+    expect(clearPunctuation(`a,b`, '$&')).toBe(`a$&b`);
+  });
+
+  it('normalizes text', () => {
+    expect(normalize(`簡體，ＡＢＣ！`)).toBe(`简体abc`);
+    expect(
+      normalize(`簡體，`, {
+        chinese: false,
+        width: false,
+        punctuation: false
+      })
+    ).toBe(`簡體，`);
+    expect(normalize(`学，`, { chinese: 'trad', punctuation: false })).toBe(
+      `學,`
+    );
+    expect(
+      normalize(`a,b!`, { chinese: false, punctuation: ' ' })
+    ).toBe(`a b `);
+    expect(normalize(`a,b`, { chinese: false, punctuation: '$&' })).toBe(
+      `a$&b`
+    );
+    expect(
+      normalize(`a,b!`, { chinese: false, punctuation: ' ', width: 'full' })
+    ).toBe(`ａ　ｂ　`);
+    expect(
+      normalize(`a,b!`, { chinese: false, punctuation: false, width: 'full' })
+    ).toBe(`ａ，ｂ！`);
+    expect(
+      normalize(`a,b!`, {
+        chinese: false,
+        case: 'upper',
+        punctuation: false,
+        width: 'full'
+      })
+    ).toBe(`Ａ，Ｂ！`);
+    expect(normalize(`ＡＢＣ！`, { chinese: false, case: false })).toBe(`ABC`);
   });
 });

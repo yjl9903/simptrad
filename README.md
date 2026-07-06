@@ -21,14 +21,21 @@ console.log(tradToSimple(t2))
 ```
 
 ```ts
-import { halfToFull, fullToHalf } from 'simptrad'
+import { halfToFull, fullToHalf, clearPunctuation, normalize } from 'simptrad'
 
 const t1 = `子曰：「学而时习之，不亦说乎？有朋自远方来，不亦乐乎？人不知，而不愠，不亦君子乎？」`;
 const t2 = `子曰:「学而时习之,不亦说乎?有朋自远方来,不亦乐乎?人不知,而不愠,不亦君子乎?」`;
 
 console.log(fullToHalf(t1))
 console.log(halfToFull(t2))
+console.log(clearPunctuation(t1))
+console.log(clearPunctuation(t1, ' '))
+console.log(normalize(t1, { chinese: 'trad', punctuation: false, width: 'half' }))
+console.log(normalize(t1, { chinese: false, punctuation: ' ', width: 'full' }))
+console.log(normalize(t2, { chinese: false, case: 'upper' }))
 ```
+
+> 限制: 简繁转换只做逐字映射，不处理词表和上下文语义。
 
 ## License
 

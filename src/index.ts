@@ -7,7 +7,6 @@ const simpToTrad = new Map<string, string>();
 const tradToSimp = new Map<string, string>();
 
 function ensureIndex() {
-  if (indexed) return;
   for (let i = 0; i < simple.length; i++) {
     simpToTrad.set(simple[i], trad[i]);
   }
@@ -20,7 +19,7 @@ function ensureIndex() {
 export function simpleToTrad(text: string) {
   if (!text) return '';
 
-  ensureIndex();
+  indexed || ensureIndex();
 
   let res = '';
   for (let i = 0; i < text.length; i++) {
@@ -33,7 +32,7 @@ export function simpleToTrad(text: string) {
 export function tradToSimple(text: string) {
   if (!text) return '';
 
-  ensureIndex();
+  indexed || ensureIndex();
 
   let res = '';
   for (let i = 0; i < text.length; i++) {
